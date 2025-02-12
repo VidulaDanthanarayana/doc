@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>API Documentation - Subscription API</title>
+    <meta name="description" content="">
+    <meta name="author" content="ticlekiwi">
+
+    <meta http-equiv="cleartype" content="on">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/hightlightjs-dark.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,300&family=Source+Code+Pro:wght@300&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="css/style.css" media="all">
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="top-menu" style="position: fixed;z-index: 99999;background-color: white;width: 100%;">
+        <div class="content-logo">
+            <div class="logo">
+                <img alt="platform by Emily van den Heever from the Noun Project" title="platform by Emily van den Heever from the Noun Project" src="images/logo.png" height="32" />
+                <span>API Documentation</span>
+            </div>
+            <button class="burger-menu-icon" id="button-menu-mobile">
+                <svg width="34" height="34" viewBox="0 0 100 100"><path class="line line1" d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058"></path><path class="line line2" d="M 20,50 H 80"></path><path class="line line3" d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942"></path></svg>
+            </button>
+        </div>
+    </div>
+    <div class="pt-3 pb-3 tab-switcher" style="position: fixed; top: 70px; width: 100%; background-color: #f5f5f5; padding: 10px 20px; z-index: 99998; border-bottom: 1px solid #e0e0e0;">
+        <a href="guide.html" class="tab-button " style="text-decoration: none;">Guide</a>
+        <a href="payment-api.html" class="tab-button active" style="text-decoration: none;">API reference</a>
+
+    </div>
+    <div style="display: flex; padding-top: 110px;">
+        <div class="left-menu">
+            <div class="mobile-menu-closer"></div>
+            <div class="content-menu">
+                <div class="content-infos">
+                    <div class="info"><b>Version:</b> 1.0.5</div>
+                    <div class="info"><b>Last Updated:</b> 15th Sep, 2021</div>
+                </div>
+                <ul class="menu-section">
+
+                    <!-- Payment Request Section -->
+                    <li class="menu-item has-submenu">
+                        <a><img src="./images/payment.png" class="me-2"/> Payment Request</a>
+                        <ul class="submenu">
+                            <li class="scroll-to-link" data-target="create-payment-request">
+                                <a style="text-decoration: none;" href="payment-api.html#create-payment-request">Create Transaction</a>
+                            </li>
+                            <li class="scroll-to-link" data-target="get-payment-request">
+                                <a style="text-decoration: none;" href="payment-api.html#get-payment-request">Get Transaction</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- Subscription Request Section -->
+                    <li class="menu-item has-submenu expanded">
+                        <a><img src="./images/subs.png" class="me-2"/>  Subscription Request</a>
+                        <ul class="submenu">
+                            <li class="scroll-to-link active" data-target="create-subscription">
+                                <a style="text-decoration: none;" href="subscription-api.html">Create Subscription</a>
+                            </li>
+                            <li class="scroll-to-link" data-target="get-subscription">
+                                <a style="text-decoration: none;" href="subscription-api.html">Get Subscription</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="content-page">
+            <div class="content">
+                <!-- Create Subscription Section -->
+                <div class="overflow-hidden row" id="create-subscription">
+                    <!-- Left side - Documentation -->
+                    <div class="documentation-section col-7" style="padding-right: 30px;">
+                        <h2>Create Subscription</h2>
+                        <p style="color: #666; margin-bottom: 20px;">
+                            Creates a new subscription for recurring payments. The subscription can be configured with various parameters including frequency, duration, and amount.
+                        </p>
+                        
+                        <div class="endpoint-info" style="background: #f8f9fa; padding: 10px; border-radius: 4px; margin-bottom: 20px;">
+                            <span style="background: #4CAF50; color: white; padding: 2px 8px; border-radius: 3px; font-size: 12px; margin-right: 10px;">POST</span>
+                            <code style="color: #666;">https://api.onepay.lk/v1/subscription</code>
+                        </div>
+
+                        <h4 style="margin-top: 30px;">REQUEST PARAMETERS</h4>
+                        <table class="central-overflow-x" style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background: #f8f9fa;">
+                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Field</th>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Type</th>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">plan_id</td>
+                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">The identifier of the subscription plan</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">customer_id</td>
+                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">The unique identifier of the customer</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">start_date</td>
+                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">The start date of the subscription (ISO 8601)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Right side - API Testing -->
+                    <div class="api-testing-section col-5" style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
+                        <div class="credentials-section" style="margin-bottom: 30px;">
+                            <h3 style="margin-bottom: 15px; color: #333;">CREDENTIALS</h3>
+                            <div style="background: white; padding: 15px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                                <div style="margin-bottom: 15px;">
+                                    <label class="input-label" style="display: block; margin-bottom: 5px; color: #666;">Header</label>
+                                    <input type="text" id="sub-authorization" class="api-input form-control" placeholder="Authorization">
+                                </div>
+                                <div style="margin-bottom: 15px;">
+                                    <label class="input-label" style="display: block; margin-bottom: 5px; color: #666;">API Key</label>
+                                    <input type="text" id="sub-api-key" class="api-input form-control" placeholder="App ID">
+                                </div>
+                                <div>
+                                    <label class="input-label" style="display: block; margin-bottom: 5px; color: #666;">Hash Salt</label>
+                                    <input type="text" id="sub-hash-salt" class="api-input form-control" placeholder="Hash Salt">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="request-section" style="margin-bottom: 30px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <h3 style="margin: 0; color: #333;">REQUEST</h3>
+                                <button id="sub-try-out-btn" style="padding: 8px 20px; background: #ff6b35; color: white; border: none; border-radius: 4px; cursor: pointer;">Try it!</button>
+                            </div>
+                            <div style="background: #2d2d2d; padding: 15px; border-radius: 4px; margin-bottom: 20px;">
+                                <pre><code class="json" id="sub-request-code" style="color: #fff; background: transparent;">
+{
+    "plan_id": "plan_basic_monthly",
+    "customer_id": "cust_12345",
+    "start_date": "2024-03-15T00:00:00Z",
+    "app_id": "80NR1189D04CD635D8ACD",
+    "hash": "GR2P1189D04CD635D8AFD"
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="response-section">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <h3 style="margin: 0; color: #333;">RESPONSE</h3>
+                                <div style="display: flex; gap: 10px;">
+                                    <span style="padding: 4px 12px; background: #4CAF50; color: white; border-radius: 12px; font-size: 12px;">200</span>
+                                    <span style="padding: 4px 12px; background: #f44336; color: white; border-radius: 12px; font-size: 12px;">400</span>
+                                    <span style="padding: 4px 12px; background: #ff9800; color: white; border-radius: 12px; font-size: 12px;">403</span>
+                                </div>
+                            </div>
+                            <div style="background: #2d2d2d; padding: 15px; border-radius: 4px;">
+                                <pre><code class="json" id="sub-response-code" style="color: #fff; background: transparent;">// Response will appear here after clicking Try it!</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Get Subscription Section -->
+                <div class="overflow-hidden row" id="get-subscription" style="margin-top: 50px;">
+                    <!-- Left side - Documentation -->
+                    <div class="documentation-section col-7" style="padding-right: 30px;">
+                        <h2>Get Subscription</h2>
+                        <p style="color: #666; margin-bottom: 20px;">
+                            Retrieves the details of an existing subscription. You need to supply the unique subscription identifier that was returned when the subscription was created.
+                        </p>
+                        
+                        <div class="endpoint-info" style="background: #f8f9fa; padding: 10px; border-radius: 4px; margin-bottom: 20px;">
+                            <span style="background: #2196F3; color: white; padding: 2px 8px; border-radius: 3px; font-size: 12px; margin-right: 10px;">GET</span>
+                            <code style="color: #666;">https://api.onepay.lk/v1/subscription/{id}</code>
+                        </div>
+
+                        <h4 style="margin-top: 30px;">PATH PARAMETERS</h4>
+                        <table class="central-overflow-x" style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background: #f8f9fa;">
+                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Parameter</th>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Type</th>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">id</td>
+                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">The unique identifier of the subscription</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Right side - API Testing -->
+                    <div class="api-testing-section col-5" style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
+                        <div class="credentials-section" style="margin-bottom: 30px;">
+                            <h3 style="margin-bottom: 15px; color: #333;">CREDENTIALS</h3>
+                            <div style="background: white; padding: 15px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                                <div style="margin-bottom: 15px;">
+                                    <label class="input-label" style="display: block; margin-bottom: 5px; color: #666;">Header</label>
+                                    <input type="text" id="get-sub-authorization" class="api-input form-control" placeholder="Authorization">
+                                </div>
+                                <div>
+                                    <label class="input-label" style="display: block; margin-bottom: 5px; color: #666;">Subscription ID</label>
+                                    <input type="text" id="subscription-id" class="api-input form-control" placeholder="Enter Subscription ID">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="request-section" style="margin-bottom: 30px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <h3 style="margin: 0; color: #333;">REQUEST</h3>
+                                <button id="get-sub-try-out-btn" style="padding: 8px 20px; background: #ff6b35; color: white; border: none; border-radius: 4px; cursor: pointer;">Try it!</button>
+                            </div>
+                            <div style="background: #2d2d2d; padding: 15px; border-radius: 4px;">
+                                <pre><code class="bash" id="get-sub-request-code" style="color: #fff; background: transparent;">GET /v1/subscription/{id}</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="response-section">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <h3 style="margin: 0; color: #333;">RESPONSE</h3>
+                                <div style="display: flex; gap: 10px;">
+                                    <span style="padding: 4px 12px; background: #4CAF50; color: white; border-radius: 12px; font-size: 12px;">200</span>
+                                    <span style="padding: 4px 12px; background: #f44336; color: white; border-radius: 12px; font-size: 12px;">404</span>
+                                </div>
+                            </div>
+                            <div style="background: #2d2d2d; padding: 15px; border-radius: 4px;">
+                                <pre><code class="json" id="get-sub-response-code" style="color: #fff; background: transparent;">// Response will appear here after clicking Try it!</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Nested menu functionality
+            const menuItems = document.querySelectorAll('.menu-item.has-submenu');
+            menuItems.forEach(item => {
+                const link = item.querySelector('a');
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    item.classList.toggle('expanded');
+                });
+            });
+
+            // Create Subscription functionality
+            const subTryOutBtn = document.getElementById('sub-try-out-btn');
+            const subRequestCode = document.getElementById('sub-request-code');
+            const subResponseCode = document.getElementById('sub-response-code');
+
+            subTryOutBtn.addEventListener('click', async function() {
+                const authorization = document.getElementById('sub-authorization').value;
+                const apiKey = document.getElementById('sub-api-key').value;
+                const hashSalt = document.getElementById('sub-hash-salt').value;
+
+                // Base request data
+                const requestData = {
+                    plan_id: "plan_basic_monthly",
+                    customer_id: "cust_12345",
+                    start_date: "2024-03-15T00:00:00Z",
+                    app_id: apiKey
+                };
+
+                try {
+                    // Generate hash
+                    const hash = await generateSHA256Hash(requestData, hashSalt);
+                    requestData.hash = hash;
+
+                    // Update request code display
+                    subRequestCode.textContent = JSON.stringify(requestData, null, 2);
+                    hljs.highlightBlock(subRequestCode);
+
+                    // Make API call
+                    try {
+                        const response = await fetch('https://api.onepay.lk/v1/subscription', {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': authorization,
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(requestData)
+                        });
+
+                        const responseData = await response.json();
+                        subResponseCode.textContent = JSON.stringify(responseData, null, 2);
+                        hljs.highlightBlock(subResponseCode);
+                    } catch (error) {
+                        subResponseCode.textContent = JSON.stringify({
+                            error: 'API call failed',
+                            message: error.message
+                        }, null, 2);
+                        hljs.highlightBlock(subResponseCode);
+                    }
+                } catch (error) {
+                    subResponseCode.textContent = JSON.stringify({
+                        error: 'Hash generation failed',
+                        message: error.message
+                    }, null, 2);
+                    hljs.highlightBlock(subResponseCode);
+                }
+            });
+
+            // Get Subscription functionality
+            const getSubTryOutBtn = document.getElementById('get-sub-try-out-btn');
+            const getSubResponseCode = document.getElementById('get-sub-response-code');
+
+            getSubTryOutBtn.addEventListener('click', async function() {
+                const authorization = document.getElementById('get-sub-authorization').value;
+                const subscriptionId = document.getElementById('subscription-id').value;
+
+                try {
+                    const response = await fetch(`https://api.onepay.lk/v1/subscription/${subscriptionId}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': authorization,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    const responseData = await response.json();
+                    getSubResponseCode.textContent = JSON.stringify(responseData, null, 2);
+                    hljs.highlightBlock(getSubResponseCode);
+                } catch (error) {
+                    getSubResponseCode.textContent = JSON.stringify({
+                        error: 'API call failed',
+                        message: error.message
+                    }, null, 2);
+                    hljs.highlightBlock(getSubResponseCode);
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

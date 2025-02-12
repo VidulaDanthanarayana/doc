@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>API Documentation - Guide</title>
+    <meta name="description" content="">
+    <meta name="author" content="ticlekiwi">
+
+    <meta http-equiv="cleartype" content="on">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/hightlightjs-dark.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,300&family=Source+Code+Pro:wght@300&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="css/style.css" media="all">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <script src="js/theme.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        /* Container styling for the ordered list */
+        ol.custom-steps {
+          margin: 0;
+          padding: 0;
+          list-style: none; /* Remove default numbering */
+          counter-reset: step-counter;
+        }
+    
+        /* Each list item’s styling */
+        ol.custom-steps > li {
+          position: relative;
+          margin-bottom: 16px; /* Spacing between steps */
+          padding-left: 50px;  /* Room for the number badge */
+        }
+    
+        /* This pseudo-element draws the circular badge */
+        ol.custom-steps > li::before {
+          counter-increment: step-counter;
+          content: counter(step-counter);
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          background-color: #4d4d4d9e; /* Badge background color */
+          color: #fff;              /* Text color */
+          font-weight: 600;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 14px;
+        }
+    
+        /* 
+          (Optional) You can tweak this media query so that
+          the steps remain nicely formatted on smaller screens.
+        */
+        @media (max-width: 576px) {
+          ol.custom-steps > li {
+            padding-left: 40px;
+          }
+          ol.custom-steps > li::before {
+            width: 28px;
+            height: 28px;
+            font-size: 12px;
+          }
+        }
+      </style>
+    <style>
+        .tab-switcher {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tab-button {
+            padding: 8px 16px;
+            margin-right: 10px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #666;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .tab-button.active {
+            background-color: rgba(0,0,0,0.1);
+            color: black;
+        }
+
+        .menu-item.has-submenu > a {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 15px;
+        }
+        .menu-item.has-submenu > a:after {
+            content: '▼';
+            font-size: 10px;
+            margin-left: 8px;
+        }
+        .submenu {
+            margin-left: 25px;
+            display: none;
+        }
+        .menu-item.has-submenu.expanded .submenu {
+            display: block;
+        }
+        .menu-item.has-submenu.expanded > a:after {
+            content: '▲';
+        }
+
+        /* Highlight the active menu item */
+        .scroll-to-link.active > a {
+            color: #007bff;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-menu" style="position: fixed;z-index: 99999;background-color: white;width: 100%;">
+        <div class="content-logo">
+            <div class="logo">
+                <img alt="platform by Emily van den Heever from the Noun Project" title="platform by Emily van den Heever from the Noun Project" src="images/logo.png" height="32" />
+                <span>API Documentation</span>
+            </div>
+            <button class="burger-menu-icon" id="button-menu-mobile">
+                <svg width="34" height="34" viewBox="0 0 100 100">
+                    <path class="line line1"
+                          d="M 20,29.000046 H 80.000231 
+                             C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 
+                             94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 
+                             79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 
+                             L 25.000021,25.000058"></path>
+                    <path class="line line2" d="M 20,50 H 80"></path>
+                    <path class="line line3"
+                          d="M 20,70.999954 H 80.000231 
+                             C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 
+                             94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 
+                             79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 
+                             L 25.000021,74.999942"></path>
+                </svg>
+            </button>
+        </div>
+        <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
+    <div class="pt-3 pb-3 tab-switcher" 
+         style="position: fixed; top: 70px; width: 100%; background-color: #f5f5f5; padding: 10px 20px; z-index: 99998; border-bottom: 1px solid #e0e0e0;">
+        <a href="guide.html" class="tab-button active" style="text-decoration: none;">Guide</a>
+        <a href="payment-api.html" class="tab-button" style="text-decoration: none;">API reference</a>
+    </div>
+
+    <div style="display: flex; padding-top: 110px;">
+        <div class="left-menu">
+            <div class="mobile-menu-closer"></div>
+            <div class="content-menu">
+                <div class="content-infos">
+                    <div class="info"><b>Version:</b> 1.0.5</div>
+                    <div class="info"><b>Last Updated:</b> 15th Sep, 2021</div>
+                </div>
+                <ul class="menu-section">
+                    <!-- Guide Section -->
+                    <li class="menu-item">
+                        <a><img src="./images/guide.png" class="me-2"/> Guide</a>
+                        <ul>
+                            <li class="scroll-to-link" data-target="getting-started">
+                                <a>Getting Started</a>
+                            </li>
+                            <li class="scroll-to-link" data-target="authentication">
+                                <a>Authentication</a>
+                            </li>
+                            <li class="scroll-to-link" data-target="error-handling">
+                                <a>Error Handling</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="menu-item">
+                        <a><img src="./images/subs.png" class="me-2"/> Solutions</a>
+                        <ul>
+                            <li class="scroll-to-link" data-target="onepay-js">
+                                <a>OnepayJS</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="menu-item">
+                        <a><img src="./images/payment.png" class="me-2"/>Testing</a>
+                        <ul>
+                            <!-- Changed data-target to 'test-card-details' -->
+                            <li class="scroll-to-link" data-target="test-card-details">
+                                <a>Card Testing</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-page">
+            <div class="content">
+                <!-- Getting Started -->
+                <div class="overflow-hidden" id="getting-started">
+                    <h1>Getting Started</h1>
+                    <p>Welcome to our documentation! This guide will help you get started with our platform.</p>
+                    <h2>Overview</h2>
+                    <p>Our API provides a simple and secure way to process payments and manage subscriptions. This guide covers the basics of integrating with our platform.</p>
+                </div>
+
+                <!-- Authentication -->
+                <div class="overflow-hidden" id="authentication">
+                    <h1>Authentication</h1>
+                    <p>All API requests require authentication using an API key. You can obtain your API key from the developer dashboard.</p>
+                    <h2>API Keys</h2>
+                    <p>Include your API key in the Authorization header of all requests:</p>
+                    <pre style="padding-top: 30px;">
+<code>Authorization: Bearer YOUR_API_KEY</code>
+                    </pre>
+                </div>
+
+                <!-- Error Handling -->
+                <div class="overflow-hidden" id="error-handling">
+                    <h1>Error Handling</h1>
+                    <p>Our API uses conventional HTTP response codes to indicate the success or failure of an API request.</p>
+
+                    <h2>Error Codes</h2>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr style="background: #f8f9fa;">
+                                    <th>Code</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>200</td>
+                                    <td>The checkout link has been successfully created</td>
+                                </tr>
+                                <tr>
+                                    <td>401</td>
+                                    <td>The Authorization header is either missing, contains an invalid application token, or includes an incorrect hash</td>
+                                </tr>
+                                <tr>
+                                    <td>400</td>
+                                    <td>
+                                        The request body is invalid due to one or more of the following errors.<br>
+                                        Detailed error information will be included in the response:
+                                        <ul style="margin-top: 8px;">
+                                            <li>Invalid app id</li>
+                                            <li>Invalid amount</li>
+                                            <li>Monthly subscription quote exceed</li>
+                                            <li>Invalid app state</li>
+                                            <li>Currency type not available for app</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>429</td>
+                                    <td>Too many requests have been made within a one second period</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- OnepayJS Script File Usage -->
+                <div class="overflow-hidden" id="onepay-js">
+                    <h1>OnepayJS Script File Usage</h1>
+                    <p>
+                        OnePayJS is a lightweight JavaScript that facilitates seamless integration with the OnePay payment gateway, 
+                        allowing businesses to accept payments effortlessly on their websites. 
+                        Designed for simplicity and efficiency, OnePayJS eliminates the need for page redirections by enabling 
+                        an on-site payment gateway overlay.
+                    </p>
+                    <ol class="custom-steps">
+                        <li>Download onepayJS file from this <a href="https://drive.google.com/file/d/111CIIg8fdmfgQY4g6V7VhpIrxVAZ5OaP/view?usp=sharing">link</a></li>
+                        <li>Add it into your project folder</li>
+                        <li>Log into our onepay Dashboard and find the API key, Hash token and access token. You can see how its done <a href="#">here</a></li>
+                        <li>Add the following code based on your projects code base</li>
+                    </ol>
+
+                    <pre class="code-tabs-container">
+                        <div class="code-tabs">
+                            <button class="code-tab active" onclick="switchTab(event, 'html-tab')">HTML</button>
+                            <button class="code-tab" onclick="switchTab(event, 'php-tab')">PHP</button>
+                            <button class="code-tab" onclick="switchTab(event, 'react-tab')">React</button>
+                        </div>
+                        
+                        <div id="html-tab" class="code-content active">
+                            <button class="copy-btn" onclick="copyCode('html-code')">Copy</button>
+                            <code class="language-html" id="html-code">
+&lt;script&gt;
+window.onePayData = {
+    appid: "80NR1189D04CD635D8ACD",
+    hashToken: "GR2P1189D04CD635D8AFD",
+    amount: 100.00,
+    orderReference: "7Q1M1187AE",
+    customerFirstName: "Johe",
+    customerLastName: "Dohe",
+    customerPhoneNumber: "+94771234567",
+    customerEmail: "viduladakshitha@gmail.com",
+    transactionRedirectUrl: "https://www.google.com.au",
+    additionalData: "vidula",
+};
+window.addEventListener("onePaySuccess", function (e) {
+    const successData = e.detail;
+    console.log("Payment SUCCESS ", successData);
+});
+window.addEventListener("onePayFail", function (e) {
+    const failData = e.detail;
+    console.log("Payment FAIL", failData);
+});
+&lt;/script&gt;</code>
+                        </div>
+
+                        <div id="php-tab" class="code-content">
+                            <button class="copy-btn" onclick="copyCode('php-code')">Copy</button>
+                            <code class="language-php" id="php-code">
+&lt;?php
+$onePayData = [
+    'appid' => '80NR1189D04CD635D8ACD',
+    'hashToken' => 'GR2P1189D04CD635D8AFD',
+    'amount' => 100.00,
+    'orderReference' => '7Q1M1187AE',
+    'customerFirstName' => 'Johe',
+    'customerLastName' => 'Dohe',
+    'customerPhoneNumber' => '+94771234567',
+    'customerEmail' => 'viduladakshitha@gmail.com',
+    'transactionRedirectUrl'=> 'https://www.google.com.au',
+    'additionalData' => 'vidula',
+];
+?&gt;
+&lt;script&gt;
+// Convert the PHP array to a JSON object
+window.onePayData = &lt;?php echo json_encode($onePayData, JSON_UNESCAPED_SLASHES); ?&gt;;
+
+// Listen for success event
+window.addEventListener("onePaySuccess", function (e) {
+    const successData = e.detail;
+    console.log("Payment SUCCESS (from PHP):", successData);
+    // You can do additional processing here or send an AJAX request to PHP
+});
+
+// Listen for fail event
+window.addEventListener("onePayFail", function (e) {
+    const failData = e.detail;
+    console.log("Payment FAIL (from PHP):", failData);
+    // You can do additional processing here or send an AJAX request to PHP
+});
+&lt;/script&gt;</code>
+                        </div>
+
+                        <div id="react-tab" class="code-content">
+                            <button class="copy-btn" onclick="copyCode('react-code')">Copy</button>
+                            <code class="language-javascript" id="react-code">
+import React, { useEffect } from "react";
+
+function App() {
+    const onePayData = {
+        appid: "80NR1189D04CD635D8ACD",
+        hashToken: "GR2P1189D04CD635D8AFD",
+        amount: 100.0,
+        orderReference: "7Q1M1187AE",
+        customerFirstName: "Johe",
+        customerLastName: "Dohe",
+        customerPhoneNumber: "+94771234567",
+        customerEmail: "viduladakshitha@gmail.com",
+        transactionRedirectUrl: "https://www.google.com.au",
+        additionalData: "vidula",
+    };
+
+    useEffect(() => {
+        // 1. Expose onePayData globally
+        window.onePayData = onePayData;
+
+        // 2. Add event listeners
+        const handleOnePaySuccess = (e) => {
+            const successData = e.detail;
+            console.log("Payment SUCCESS from React:", successData);
+        };
+
+        const handleOnePayFail = (e) => {
+            const failData = e.detail;
+            console.log("Payment FAIL from React:", failData);
+        };
+
+        window.addEventListener("onePaySuccess", handleOnePaySuccess);
+        window.addEventListener("onePayFail", handleOnePayFail);
+
+        return () => {
+            window.removeEventListener("onePaySuccess", handleOnePaySuccess);
+            window.removeEventListener("onePayFail", handleOnePayFail);
+        };
+    }, [onePayData]);
+
+    return (
+        &lt;div style={{ margin: "20px" }}&gt;
+            &lt;div id="onepay-btn" /&gt;
+            &lt;div id="iframe-container" /&gt;
+        &lt;/div&gt;
+    );
+}
+
+export default App;</code>
+                        </div>
+                    </pre>
+
+                    <style>
+                        .code-tabs-container {
+                            position: relative;
+                            background: #f8f9fa;
+                            border-radius: 6px;
+                            margin: 20px 0;
+                            padding: 20px;
+                            min-height: 400px; /* Add minimum height to prevent container collapse */
+                        }
+
+                        .code-tabs {
+                            margin-bottom: 15px;
+                            border-bottom: 2px solid #dee2e6;
+                            position: sticky;
+                            top: 0;
+                            background: #f8f9fa;
+                            z-index: 1;
+                        }
+
+                        .code-tab {
+                            background: none;
+                            border: none;
+                            padding: 8px 16px;
+                            margin-right: 4px;
+                            cursor: pointer;
+                            font-size: 14px;
+                            color: #6c757d;
+                            border-bottom: 2px solid transparent;
+                            margin-bottom: -2px;
+                        }
+
+                        .code-tab.active {
+                            color: #007bff;
+                            border-bottom: 2px solid #007bff;
+                        }
+
+                        .code-content {
+                            display: none;
+                            position: absolute;
+                            width: calc(100% - 40px); /* Account for container padding */
+                            left: 20px;
+                            top: 70px; /* Adjust based on tabs height */
+                        }
+
+                        .code-content.active {
+                            display: block;
+                        }
+
+                        .copy-btn {
+                            position: absolute;
+                            top: 10px;
+                            right: 10px;
+                            padding: 6px 12px;
+                            background: #007bff;
+                            color: white;
+                            border: none;
+                            border-radius: 4px;
+                            cursor: pointer;
+                            font-size: 12px;
+                            z-index: 2;
+                        }
+
+                        .copy-btn:hover {
+                            background: #0056b3;
+                        }
+
+                        code {
+                            display: block;
+                            padding: 15px;
+                            border-radius: 4px;
+                            background: #282c34;
+                            color: #abb2bf;
+                            overflow-x: auto;
+                            width: 100%;
+                        }
+                    </style>
+
+                    <script>
+                        function switchTab(event, tabId) {
+                            // Remove active class from all tabs and content
+                            document.querySelectorAll('.code-tab').forEach(tab => {
+                                tab.classList.remove('active');
+                            });
+                            document.querySelectorAll('.code-content').forEach(content => {
+                                content.classList.remove('active');
+                            });
+
+                            // Add active class to clicked tab and corresponding content
+                            event.target.classList.add('active');
+                            document.getElementById(tabId).classList.add('active');
+                        }
+
+                        function copyCode(elementId) {
+                            const codeElement = document.getElementById(elementId);
+                            const text = codeElement.textContent;
+                            
+                            navigator.clipboard.writeText(text).then(() => {
+                                const copyBtn = codeElement.parentElement.querySelector('.copy-btn');
+                                copyBtn.textContent = 'Copied!';
+                                setTimeout(() => {
+                                    copyBtn.textContent = 'Copy';
+                                }, 2000);
+                            }).catch(err => {
+                                console.error('Failed to copy:', err);
+                            });
+                        }
+                    </script>
+                </div>
+
+                <!-- Test Card Details Section -->
+                <div class="overflow-hidden" id="test-card-details" style="margin-top: 50px;">
+                    <h1>Test Card Details</h1>
+                    <p>Use the following test card details for integration testing:</p>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr style="background: #f8f9fa;">
+                                    <th>Card Type</th>
+                                    <th>Card Number</th>
+                                    <th>Expiration Date</th>
+                                    <th>CVV</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Visa Rows -->
+                                <tr>
+                                    <td>Visa</td>
+                                    <td>4508750015741019</td>
+                                    <td>01/39</td>
+                                    <td>100</td>
+                                </tr>
+                                <tr>
+                                    <td>Visa</td>
+                                    <td>4012000033330026</td>
+                                    <td>01/39</td>
+                                    <td>100</td>
+                                </tr>
+                                <!-- Master Rows -->
+                                <tr>
+                                    <td>Master</td>
+                                    <td>5123450000000008</td>
+                                    <td>01/39</td>
+                                    <td>100</td>
+                                </tr>
+                                <tr>
+                                    <td>Master</td>
+                                    <td>5111111111111118</td>
+                                    <td>01/39</td>
+                                    <td>100</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Smooth scroll + Active link highlight -->
+    <script src="js/script.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const menuLinks = document.querySelectorAll('.scroll-to-link');
+        const sections = document.querySelectorAll('.overflow-hidden');
+
+        // On-click smooth scrolling
+        menuLinks.forEach(link => {
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetID = link.getAttribute('data-target');
+            const targetEl = document.getElementById(targetID);
+            
+            if (targetEl) {
+              window.scrollTo({
+                top: targetEl.offsetTop - 60, // offset for fixed header
+                behavior: 'smooth'
+              });
+            }
+          });
+        });
+
+        // Highlight active menu item on scroll
+        window.addEventListener('scroll', () => {
+          let fromTop = window.scrollY + 70; // offset for top menu
+          
+          sections.forEach(section => {
+            if (
+              section.offsetTop <= fromTop &&
+              (section.offsetTop + section.offsetHeight) > fromTop
+            ) {
+              let sectionId = section.getAttribute('id');
+              
+              menuLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-target') === sectionId) {
+                  link.classList.add('active');
+                }
+              });
+            }
+          });
+        });
+      });
+    </script>
+</body>
+</html>
