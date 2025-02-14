@@ -1,453 +1,1297 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>API Documentation - Payment API</title>
-    <meta name="description" content="">
-    <meta name="author" content="ticlekiwi">
+  <meta charset="utf-8">
+  <title>API Documentation - Payment API</title>
+  <meta name="description" content="">
+  <meta name="author" content="ticlekiwi">
 
-    <meta http-equiv="cleartype" content="on">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="cleartype" content="on">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="css/hightlightjs-dark.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,300&family=Source+Code+Pro:wght@300&display=swap" rel="stylesheet"> 
-    <link rel="stylesheet" href="css/style.css" media="all">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="css/hightlightjs-dark.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,300&family=Source+Code+Pro:wght@300&display=swap" rel="stylesheet"> 
+  <link rel="stylesheet" href="css/style.css" media="all">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-    <script>hljs.initHighlightingOnLoad();</script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
-    <script src="js/theme.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+  <script src="js/theme.js"></script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <style>
+    /* Existing styles */
+
+    .scroll-to-link {
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .scroll-to-link a {
+      color: #666;
+      text-decoration: none;
+      display: block;
+      padding: 8px 15px;
+      transition: all 0.3s ease;
+    }
+
+    .scroll-to-link.active {
+      background-color: rgba(255, 107, 53, 0.1);
+    }
+
+    .scroll-to-link.active a {
+      color: #ff6b35;
+      font-weight: 500;
+    }
+
+    .scroll-to-link.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 3px;
+      background-color: #ff6b35;
+    }
+
+    .menu-item.has-submenu {
+      transition: all 0.3s ease;
+    }
+
+    .menu-item.has-submenu .submenu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .menu-item.has-submenu.expanded .submenu {
+      max-height: 500px;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="top-menu" style="position: fixed;z-index: 99999;background-color: white;width: 100%;">
-        <div class="content-logo">
-            <div class="logo">
-                <img alt="platform by Emily van den Heever from the Noun Project" title="platform by Emily van den Heever from the Noun Project" src="images/logo.png" height="32" />
-                <span>API Documentation</span>
-            </div>
-            <button class="burger-menu-icon" id="button-menu-mobile">
-                <svg width="34" height="34" viewBox="0 0 100 100">
-                    <path class="line line1" d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058"></path>
-                    <path class="line line2" d="M 20,50 H 80"></path>
-                    <path class="line line3" d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942"></path>
-                </svg>
-            </button>
+  <div class="top-menu" style="position: fixed;z-index: 99999;background-color: white;width: 100%;">
+    <div class="content-logo">
+      <div class="logo">
+        <img alt="platform by Emily van den Heever from the Noun Project" title="platform by Emily van den Heever from the Noun Project" src="images/logo.png" height="32" />
+        <span>API Documentation</span>
+      </div>
+      <button class="burger-menu-icon" id="button-menu-mobile">
+        <svg width="34" height="34" viewBox="0 0 100 100">
+          <path class="line line1" d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058"></path>
+          <path class="line line2" d="M 20,50 H 80"></path>
+          <path class="line line3" d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942"></path>
+        </svg>
+      </button>
+    </div>
+    <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()">
+      <i class="fas fa-moon"></i>
+    </button>
+  </div>
+
+  <div class="pt-3 pb-3 tab-switcher" style="position: fixed; top: 70px; width: 100%; background-color: #f5f5f5; padding: 10px 20px; z-index: 99998; border-bottom: 1px solid #e0e0e0;">
+    <a href="index.html" class="tab-button" style="text-decoration: none;">Guide</a>
+    <a href="payment-api.html" class="tab-button active" style="text-decoration: none;">API reference</a>
+  </div>
+
+  <div style="display: flex; padding-top: 110px;">
+    <div class="left-menu">
+      <div class="mobile-menu-closer"></div>
+      <div class="content-menu">
+        <div class="content-infos">
+          <div class="info"><b>Version:</b> 1.0.5</div>
+          <div class="info"><b>Last Updated:</b> 15th Sep, 2021</div>
         </div>
-        <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()">
-            <i class="fas fa-moon"></i>
-        </button>
+        <ul class="menu-section">
+          <!-- Payment Section -->
+          <li class="menu-item has-submenu expanded">
+            <a><img src="./images/subs.png" class="me-2"/> Payment</a>
+            <ul class="submenu">
+              <li class="scroll-to-link active" data-target="create-payment-request">
+                <a>Create Transaction</a>
+              </li>
+              <li class="scroll-to-link" data-target="get-payment-request">
+                <a>Get Transaction</a>
+              </li>
+            </ul>
+          </li>
+          <!-- Items Section -->
+          <li class="menu-item has-submenu">
+            <a><img src="./images/subs.png" class="me-2"/> Items</a>
+            <ul class="submenu">
+              <li class="scroll-to-link" data-target="create-item">
+                <a>Create Item</a>
+              </li>
+              <li class="scroll-to-link" data-target="get-item">
+                <a>Get Item</a>
+              </li>
+              <li class="scroll-to-link" data-target="update-item">
+                <a>Update Item</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </div>
 
-    <div class="pt-3 pb-3 tab-switcher" style="position: fixed; top: 70px; width: 100%; background-color: #f5f5f5; padding: 10px 20px; z-index: 99998; border-bottom: 1px solid #e0e0e0;">
-        <a href="index.html" class="tab-button " style="text-decoration: none;">Guide</a>
-        <a href="payment-api.html" class="tab-button active" style="text-decoration: none;">API reference</a>
-    </div>
+    <div class="content-page">
+      <div class="content p-3">
+        <!-- Create Payment Request Section -->
+        <div class="overflow-hidden row" id="create-payment-request">
+          <!-- Left side - Documentation -->
+          <div class="documentation-section col-lg-7 col-md-7 col-12" style="padding-right: 30px;">
+            <h2>Create Payment Request</h2>
+            <p style="color: #666; margin-bottom: 20px;">
+              Creates a payment request. Once created, your customer can make a payment to the specified PayID. You can poll for PaymentStatus using <b>getPaymentRequest</b> to determine whether or not the required payment was made by the customer.
+            </p>
 
-    <div style="display: flex; padding-top: 110px;">
-        <div class="left-menu">
-            <div class="mobile-menu-closer"></div>
-            <div class="content-menu">
-                <div class="content-infos">
-                    <div class="info"><b>Version:</b> 1.0.5</div>
-                    <div class="info"><b>Last Updated:</b> 15th Sep, 2021</div>
+            <div class="endpoint-info" style="background: #f8f9fa; padding: 10px; border-radius: 4px; margin-bottom: 20px;">
+              <span style="background: #4CAF50; color: white; padding: 2px 8px; border-radius: 3px; font-size: 12px; margin-right: 10px;">POST</span>
+              <code style="color: #666;">https://api.onepay.lk/v3/checkout/link/</code>
+            </div>
+
+            <h4 style="margin-top: 30px;">REQUEST PARAMETERS</h4>
+            <table class="central-overflow-x" style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr style="background: #f8f9fa;">
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Parameter</th>
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Type</th>
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">currency</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">The currency of the transaction (e.g., LKR, USD)</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">app_id</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">The unique application identifier</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">hash</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">A hash for securing the payment request</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">amount</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Number</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">The amount to be paid</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">reference</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">A reference ID for the transaction</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">customer_first_name</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">First name of the customer</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">customer_last_name</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Last name of the customer</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">customer_phone_number</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Customer's phone number</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">customer_email</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Customer's email address</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">transaction_redirect_url</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">URL to redirect after transaction completion</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">additionalData</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Any additional data related to the transaction</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h4 style="margin-top: 30px;">RESPONSE PARAMETERS</h4>
+            <table class="central-overflow-x" style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr style="background: #f8f9fa;">
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Parameter</th>
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Type</th>
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">status</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Number</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Status code (e.g., 200 for a successful request)</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">message</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Descriptive message about the response</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Object</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Contains details of the created payment request</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data.ipg_transaction_id</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Unique IPG (In Payment Gateway) transaction ID</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data.amount</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Object</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Detailed breakdown of the transaction amounts</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data.amount.gross_amount</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Number</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Gross transaction amount</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data.amount.discount</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Number</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Discount applied (if any)</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data.amount.handling_fee</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Number</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Handling fee for the transaction</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data.amount.net_amount</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Number</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Net amount after discount and fees</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data.amount.currency</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Currency code (e.g. LKR)</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data.gateway</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Object</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Information about the payment gateway</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data.gateway.redirect_url</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">URL to redirect the user for payment completion</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Right side - API Testing -->
+          <div class="api-testing-section col-lg-5 col-12" style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
+            <div class="credentials-section" style="margin-bottom: 30px;">
+              <h3 style="margin-bottom: 15px; color: #333;">CREDENTIALS</h3>
+              <div style="background: white; padding: 15px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div style="margin-bottom: 15px;">
+                  <label class="input-label" style="display: block; margin-bottom: 5px; color: #666;">Header</label>
+                  <input type="text" id="authorization" class="api-input form-control" placeholder="Authorization">
                 </div>
-                <ul class="menu-section">
-                    <!-- Payment Request Section -->
-                    <li class="menu-item has-submenu expanded">
-                        <a><img src="./images/subs.png" class="me-2"/> Payment</a>
-                        <ul class="submenu">
-                            <li class="scroll-to-link active" data-target="create-payment-request">
-                                <a>Create Transaction</a>
-                            </li>
-                            <li class="scroll-to-link" data-target="get-payment-request">
-                                <a>Get Transaction</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+                <div style="margin-bottom: 15px;">
+                  <label class="input-label" style="display: block; margin-bottom: 5px; color: #666;">API Key</label>
+                  <input type="text" id="api-key" class="api-input form-control" placeholder="App ID">
+                </div>
+                <div>
+                  <label class="input-label" style="display: block; margin-bottom: 5px; color: #666;">Hash Salt</label>
+                  <input type="text" id="hash-salt" class="api-input form-control" placeholder="Hash Salt">
+                </div>
+              </div>
             </div>
-        </div>
 
-        <div class="content-page">
-            <div class="content p-3">
-                <!-- Create Payment Request Section -->
-                <div class="overflow-hidden row" id="create-payment-request">
-                    <!-- Left side - Documentation -->
-                    <div class="documentation-section col-lg-7 col-md-7 col-12" style="padding-right: 30px;">
-                        <h2>Create Payment Request</h2>
-                        <p style="color: #666; margin-bottom: 20px;">
-                            Creates a payment request. Once created, your customer can make a payment to the specified PayID. You can poll for PaymentStatus using <b>getPaymentRequest</b> to determine whether or not the required payment was made by the customer.
-                        </p>
-
-                        <div class="endpoint-info" style="background: #f8f9fa; padding: 10px; border-radius: 4px; margin-bottom: 20px;">
-                            <span style="background: #4CAF50; color: white; padding: 2px 8px; border-radius: 3px; font-size: 12px; margin-right: 10px;">POST</span>
-                            <code style="color: #666;">https://api.onepay.lk/v1/paymentRequest</code>
-                        </div>
-
-                        <h4 style="margin-top: 30px;">REQUEST PARAMETERS</h4>
-                        <table class="central-overflow-x" style="width: 100%; border-collapse: collapse;">
-                            <thead>
-                                <tr style="background: #f8f9fa;">
-                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Parameter</th>
-                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Type</th>
-                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">currency</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">The currency of the transaction (e.g., LKR, USD)</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">app_id</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">The unique application identifier</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">hash</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">A hash for securing the payment request</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">amount</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">Number</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">The amount to be paid</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">reference</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">A reference ID for the transaction</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">customer_first_name</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">First name of the customer</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">customer_last_name</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">Last name of the customer</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">customer_phone_number</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">Customer's phone number</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">customer_email</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">Customer's email address</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">transaction_redirect_url</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">URL to redirect after transaction completion</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">additionalData</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">Any additional data related to the transaction</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <!-- New: RESPONSE PARAMETERS -->
-                        <h4 style="margin-top: 30px;">RESPONSE PARAMETERS</h4>
-                        <table class="central-overflow-x" style="width: 100%; border-collapse: collapse;">
-                            <thead>
-                                <tr style="background: #f8f9fa;">
-                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Parameter</th>
-                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Type</th>
-                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">status</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">Number</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">Status code (e.g., 200 for a successful request)</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">message</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">Descriptive message about the response</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">data</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">Object</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">Contains details of the created payment request</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">data.ipg_transaction_id</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">Unique IPG (In Payment Gateway) transaction ID</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">data.amount</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">Object</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">Detailed breakdown of the transaction amounts</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">data.amount.gross_amount</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">Number</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">Gross transaction amount</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">data.amount.discount</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">Number</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">Discount applied (if any)</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">data.amount.handling_fee</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">Number</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">Handling fee for the transaction</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">data.amount.net_amount</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">Number</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">Net amount after discount and fees</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">data.amount.currency</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">Currency code (e.g. LKR)</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">data.gateway</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">Object</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">Information about the payment gateway</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">data.gateway.redirect_url</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">URL to redirect the user for payment completion</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Right side - API Testing -->
-                    <div class="api-testing-section col-lg-5 col" style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
-                        <div class="credentials-section" style="margin-bottom: 30px;">
-                            <h3 style="margin-bottom: 15px; color: #333;">CREDENTIALS</h3>
-                            <div style="background: white; padding: 15px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-                                <div style="margin-bottom: 15px;">
-                                    <label class="input-label" style="display: block; margin-bottom: 5px; color: #666;">Header</label>
-                                    <input type="text" id="authorization" class="api-input form-control" placeholder="Authorization">
-                                </div>
-                                <div style="margin-bottom: 15px;">
-                                    <label class="input-label" style="display: block; margin-bottom: 5px; color: #666;">API Key</label>
-                                    <input type="text" id="api-key" class="api-input form-control" placeholder="App ID">
-                                </div>
-                                <div>
-                                    <label class="input-label" style="display: block; margin-bottom: 5px; color: #666;">Hash Salt</label>
-                                    <input type="text" id="hash-salt" class="api-input form-control" placeholder="Hash Salt">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="request-section" style="margin-bottom: 30px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                                <h3 style="margin: 0; color: #333;">REQUEST</h3>
-                                <button id="try-out-btn" style="padding: 8px 20px; background: #ff6b35; color: white; border: none; border-radius: 4px; cursor: pointer;">Try it!</button>
-                            </div>
-                            <div style="background: #2d2d2d; padding: 15px; border-radius: 4px; margin-bottom: 20px;">
+            <div class="request-section" style="margin-bottom: 30px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="margin: 0; color: #333;">REQUEST</h3>
+                <button id="try-out-btn" style="padding: 8px 20px; background: #ff6b35; color: white; border: none; border-radius: 4px; cursor: pointer;">Try it!</button>
+              </div>
+              <div style="background: #2d2d2d; padding: 15px; border-radius: 4px; margin-bottom: 20px;">
 <pre><code class="json" id="request-code" style="color: #fff; background: transparent;">
 {
-    "currency": "LKR",      
-    "app_id": "80NR1189D04CD635D8ACD",
-    "hash": "GR2P1189D04CD635D8AFD",
-    "amount": 100.00,
-    "reference": "7Q1M1187AE",
-    "customer_first_name": "Johe",
-    "customer_last_name": "Dohe",
-    "customer_phone_number": "+94771234567",
-    "customer_email": "viduladakshitha@gmail.com",
-    "transaction_redirect_url": "https://www.google.com.au",
-    "additionalData": "testing"
+  "currency": "LKR",      
+  "app_id": "80NR1189D04CD635D8ACD",
+  "hash": "GR2P1189D04CD635D8AFD",
+  "amount": 100.00,
+  "reference": "7Q1M1187AE",
+  "customer_first_name": "Johe",
+  "customer_last_name": "Dohe",
+  "customer_phone_number": "+94771234567",
+  "customer_email": "viduladakshitha@gmail.com",
+  "transaction_redirect_url": "https://www.google.com.au",
+  "additionalData": "testing"
 }
 </code></pre>
-                            </div>
-                        </div>
+              </div>
+            </div>
 
-                        <div class="response-section">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                                <h3 style="margin: 0; color: #333;">RESPONSE</h3>
-                                <div style="display: flex; gap: 10px;">
-                                    <span style="padding: 4px 12px; background: #4CAF50; color: white; border-radius: 12px; font-size: 12px;">200</span>
-                                    <span style="padding: 4px 12px; background: #f44336; color: white; border-radius: 12px; font-size: 12px;">400</span>
-                                    <span style="padding: 4px 12px; background: #ff9800; color: white; border-radius: 12px; font-size: 12px;">403</span>
-                                </div>
-                            </div>
-                            <div style="background: #2d2d2d; padding: 15px; border-radius: 4px;">
+            <div class="response-section">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="margin: 0; color: #333;">RESPONSE</h3>
+                <div style="display: flex; gap: 10px;">
+                  <span style="padding: 4px 12px; background: #4CAF50; color: white; border-radius: 12px; font-size: 12px;">200</span>
+                  <span style="padding: 4px 12px; background: #f44336; color: white; border-radius: 12px; font-size: 12px;">400</span>
+                  <span style="padding: 4px 12px; background: #ff9800; color: white; border-radius: 12px; font-size: 12px;">403</span>
+                </div>
+              </div>
+              <div style="background: #2d2d2d; padding: 15px; border-radius: 4px;">
 <pre><code class="json" id="response-code" style="color: #fff; background: transparent;">
 // Response will appear here after clicking Try it!
 
 /*
 Sample Successful Response:
 {
-    "status": 200,
-    "message": "Successfully generate checkout link",
-    "data": {
-        "ipg_transaction_id": "XXXXXXXXXXXXXXXX",
-        "amount": {
-            "gross_amount": 100.00,
-            "discount": 0,
-            "handling_fee": 0,
-            "net_amount": 100.0,
-            "currency": "LKR"
-        },
-        "gateway": {
-            "redirect_url": "https://payment.onepay.lk/redirect/XXXXXXXXXX"
-        }
-    }
+  "status": 200,
+  "message": "Successfully generate checkout link",
+  "data": {
+      "ipg_transaction_id": "XXXXXXXXXXXXXXXX",
+      "amount": {
+          "gross_amount": 100.00,
+          "discount": 0,
+          "handling_fee": 0,
+          "net_amount": 100.0,
+          "currency": "LKR"
+      },
+      "gateway": {
+          "redirect_url": "https://payment.onepay.lk/redirect/XXXXXXXXXX"
+      }
+  }
 }
 */
 </code></pre>
-                            </div>
-                        </div>
-                    </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Get Payment Request Section -->
+        <div class="overflow-hidden row" id="get-payment-request" style="margin-top: 50px;">
+          <!-- Left side - Documentation -->
+          <div class="documentation-section col-7" style="padding-right: 30px;">
+            <h2>Get Transaction</h2>
+            <p style="color: #666; margin-bottom: 20px;">
+              Retrieves the status and details of an existing transaction using the transaction ID.
+            </p>
+
+            <div class="endpoint-info" style="background: #f8f9fa; padding: 10px; border-radius: 4px; margin-bottom: 20px;">
+              <span style="background: #4CAF50; color: white; padding: 2px 8px; border-radius: 3px; font-size: 12px; margin-right: 10px;">POST</span>
+              <code style="color: #666;">https://api.onepay.lk/v3/transaction/status/</code>
+            </div>
+
+            <h4 style="margin-top: 30px;">REQUEST PARAMETERS</h4>
+            <table class="central-overflow-x" style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr style="background: #f8f9fa;">
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Parameter</th>
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Type</th>
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">app_id</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">The unique application identifier</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">onepay_transaction_id</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">The unique transaction identifier</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h4 style="margin-top: 30px;">RESPONSE PARAMETERS</h4>
+            <table class="central-overflow-x" style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr style="background: #f8f9fa;">
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Parameter</th>
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Type</th>
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">status</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Number</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Status code of the response (e.g., 200 for success)</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">message</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Response message indicating the result of the operation</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Object</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Contains the transaction details</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data.ipg_transaction_id</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">The unique transaction identifier</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data.currency</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Currency code of the transaction</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data.amount</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Number</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Amount of the transaction</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data.transaction_request_datetime</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Date and time when the transaction was requested</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data.status</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Boolean</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Payment status of the transaction</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data.paid_on</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String|null</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Date and time when the payment was made, null if not paid</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Right side - API Testing -->
+          <div class="api-testing-section col-5" style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
+            <div class="credentials-section" style="margin-bottom: 30px;">
+              <h3 style="margin-bottom: 15px; color: #333;">CREDENTIALS</h3>
+              <div style="background: white; padding: 15px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div style="margin-bottom: 15px;">
+                  <label class="input-label" style="display: block; margin-bottom: 5px; color: #666;">Authorization</label>
+                  <input type="text" id="get-authorization" class="api-input form-control" placeholder="Authorization">
                 </div>
+                <div style="margin-bottom: 15px;">
+                  <label class="input-label" style="display: block; margin-bottom: 5px; color: #666;">App ID</label>
+                  <input type="text" id="get-app-id" class="api-input form-control" placeholder="App ID">
+                </div>
+                <div>
+                  <label class="input-label" style="display: block; margin-bottom: 5px; color: #666;">Transaction ID</label>
+                  <input type="text" id="transaction-id" class="api-input form-control" placeholder="Transaction ID">
+                </div>
+              </div>
+            </div>
 
-                <!-- Get Payment Request Section -->
-                <div class="overflow-hidden row" id="get-payment-request" style="margin-top: 50px;">
-                    <!-- Left side - Documentation -->
-                    <div class="documentation-section col-7" style="padding-right: 30px;">
-                        <h2>Get Payment Request</h2>
-                        <p style="color: #666; margin-bottom: 20px;">
-                            Retrieves the details of an existing payment request. You need to supply the unique payment request identifier that was returned when the payment request was created.
-                        </p>
+            <div class="request-section" style="margin-bottom: 30px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="margin: 0; color: #333;">REQUEST</h3>
+                <button id="get-try-out-btn" style="padding: 8px 20px; background: #ff6b35; color: white; border: none; border-radius: 4px; cursor: pointer;">Try it!</button>
+              </div>
+              <div style="background: #2d2d2d; padding: 15px; border-radius: 4px; margin-bottom: 20px;">
+<pre><code class="json" id="get-request-code" style="color: #fff; background: transparent;">
+{
+  "app_id": "37JR1187AEA68DE9D6D84",
+  "onepay_transaction_id": "4RDJ1187BEA110906A6A1"
+}
+</code></pre>
+              </div>
+            </div>
 
-                        <div class="endpoint-info" style="background: #f8f9fa; padding: 10px; border-radius: 4px; margin-bottom: 20px;">
-                            <span style="background: #2196F3; color: white; padding: 2px 8px; border-radius: 3px; font-size: 12px; margin-right: 10px;">GET</span>
-                            <code style="color: #666;">https://api.onepay.lk/v1/paymentRequest/{id}</code>
-                        </div>
+            <div class="response-section">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="margin: 0; color: #333;">RESPONSE</h3>
+                <div style="display: flex; gap: 10px;">
+                  <span style="padding: 4px 12px; background: #4CAF50; color: white; border-radius: 12px; font-size: 12px;">200</span>
+                  <span style="padding: 4px 12px; background: #f44336; color: white; border-radius: 12px; font-size: 12px;">400</span>
+                  <span style="padding: 4px 12px; background: #ff9800; color: white; border-radius: 12px; font-size: 12px;">403</span>
+                </div>
+              </div>
+              <div style="background: #2d2d2d; padding: 15px; border-radius: 4px;">
+<pre><code class="json" id="get-response-code" style="color: #fff; background: transparent;">
+{
+  "status": 200,
+  "message": "Successfully get transaction status",
+  "data": {
+    "ipg_transaction_id": "4RDJ1187BEA110906A6A1",
+    "currency": "LKR",
+    "amount": 435.26,
+    "transaction_request_datetime": "2021-10-05 11:16:42",
+    "status": false,
+    "paid_on": null
+  }
+}
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
 
-                        <h4 style="margin-top: 30px;">PATH PARAMETERS</h4>
-                        <table class="central-overflow-x" style="width: 100%; border-collapse: collapse;">
-                            <thead>
-                                <tr style="background: #f8f9fa;">
-                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Parameter</th>
-                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Type</th>
-                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">id</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
-                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">The unique identifier of the payment request</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+        <!-- Create Item Section -->
+        <div class="overflow-hidden row" id="create-item" style="margin-top: 50px;">
+          <!-- Left side - Documentation -->
+          <div class="documentation-section col-lg-7 col-md-7 col-12" style="padding-right: 30px;">
+            <h2>Create Item</h2>
+            <p style="color: #666; margin-bottom: 20px;">
+              Creates an item in the system. Provide the item details such as name, description, price, currency, image URL and metadata.
+            </p>
 
-                    <!-- Right side - API Testing -->
-                    <div class="api-testing-section col-5" style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
-                        <div class="credentials-section" style="margin-bottom: 30px;">
-                            <h3 style="margin-bottom: 15px; color: #333;">CREDENTIALS</h3>
-                            <div style="background: white; padding: 15px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-                                <div style="margin-bottom: 15px;">
-                                    <label class="input-label" style="display: block; margin-bottom: 5px; color: #666;">Header</label>
-                                    <input type="text" id="get-authorization" class="api-input form-control" placeholder="Authorization">
-                                </div>
-                                <div>
-                                    <label class="input-label" style="display: block; margin-bottom: 5px; color: #666;">Payment Request ID</label>
-                                    <input type="text" id="payment-request-id" class="api-input form-control" placeholder="Enter Payment Request ID">
-                                </div>
-                            </div>
-                        </div>
+            <div class="endpoint-info" style="background: #f8f9fa; padding: 10px; border-radius: 4px; margin-bottom: 20px;">
+              <span style="background: #4CAF50; color: white; padding: 2px 8px; border-radius: 3px; font-size: 12px; margin-right: 10px;">POST</span>
+              <code style="color: #666;">http://api.onepay.lk/v3/item/</code>
+            </div>
 
-                        <div class="request-section" style="margin-bottom: 30px;">
-                            <div style="display: flex; justify-content: right; align-items: center; margin-bottom: 10px;">
-                                <button id="get-try-out-btn" style="padding: 8px 20px; background: #ff6b35; color: white; border: none; border-radius: 4px; cursor: pointer;">Try it!</button>
-                            </div>
-                        </div>
+            <h4 style="margin-top: 30px;">REQUEST PARAMETERS</h4>
+            <table class="central-overflow-x" style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr style="background: #f8f9fa;">
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Parameter</th>
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Type</th>
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">name</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Name of the item</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">description</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Description of the item</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">price</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Number</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Price of the item</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">currency</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Currency code for the price (e.g., USD, LKR)</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">image_url</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">URL of the item's image</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">metadata</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Object</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Additional metadata about the item (custom key-value pairs)</td>
+                </tr>
+              </tbody>
+            </table>
 
-                        <div class="response-section">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                                <h3 style="margin: 0; color: #333;">RESPONSE</h3>
-                                <div style="display: flex; gap: 10px;">
-                                    <span style="padding: 4px 12px; background: #4CAF50; color: white; border-radius: 12px; font-size: 12px;">200</span>
-                                    <span style="padding: 4px 12px; background: #f44336; color: white; border-radius: 12px; font-size: 12px;">404</span>
-                                </div>
-                            </div>
-                            <div style="background: #2d2d2d; padding: 15px; border-radius: 4px;">
-                                <pre><code class="json" id="get-response-code" style="color: #fff; background: transparent;">
+            <h4 style="margin-top: 30px;">RESPONSE PARAMETERS</h4>
+            <table class="central-overflow-x" style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr style="background: #f8f9fa;">
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Parameter</th>
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Type</th>
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">status</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Number</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Status code of the response (e.g., 200 for success)</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">message</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Response message indicating the result of the operation</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Object</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Contains the response data</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data.item_id</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Unique identifier for the created item</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Right side - API Testing -->
+          <div class="api-testing-section col-lg-5 col-md-5 col-12" style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
+            <div class="credentials-section" style="margin-bottom: 30px;">
+              <h3 style="margin-bottom: 15px; color: #333;">CREDENTIALS</h3>
+              <div style="background: white; padding: 15px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div>
+                  <label class="input-label" style="display: block; margin-bottom: 5px; color: #666;">Authorization</label>
+                  <input type="text" id="create-item-authorization" class="api-input form-control" placeholder="Authorization">
+                </div>
+              </div>
+            </div>
+
+            <div class="request-section" style="margin-bottom: 30px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="margin: 0; color: #333;">REQUEST</h3>
+                <button id="create-item-try-out-btn" style="padding: 8px 20px; background: #ff6b35; color: white; border: none; border-radius: 4px; cursor: pointer;">Try it!</button>
+              </div>
+              <div style="background: #2d2d2d; padding: 15px; border-radius: 4px; margin-bottom: 20px;">
+<pre><code class="json" id="create-item-request-code" style="color: #fff; background: transparent;">
+{
+  "name": "Desktop",
+  "description": "Work Laptop",
+  "price": 1400.99,
+  "currency": "USD",
+  "image_url": "https://example.com/laptop.jpg",
+  "metadata": {
+    "brand": "Dell",
+    "processor": "Intel i5",
+    "RAM": "16GB"
+  }
+}
+</code></pre>
+              </div>
+            </div>
+
+            <div class="response-section">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="margin: 0; color: #333;">RESPONSE</h3>
+                <div style="display: flex; gap: 10px;">
+                  <span style="padding: 4px 12px; background: #4CAF50; color: white; border-radius: 12px; font-size: 12px;">200</span>
+                  <span style="padding: 4px 12px; background: #f44336; color: white; border-radius: 12px; font-size: 12px;">400</span>
+                </div>
+              </div>
+              <div style="background: #2d2d2d; padding: 15px; border-radius: 4px;">
+<pre><code class="json" id="create-item-response-code" style="color: #fff; background: transparent;">
 // Response will appear here after clicking Try it!
 </code></pre>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+              </div>
             </div>
+          </div>
         </div>
+
+        <!-- Get Item Section -->
+        <div class="overflow-hidden row" id="get-item" style="margin-top: 50px;">
+          <!-- Left side - Documentation -->
+          <div class="documentation-section col-lg-7 col-md-7 col-12" style="padding-right: 30px;">
+            <h2>Get Item</h2>
+            <p style="color: #666; margin-bottom: 20px;">
+              Retrieves a list of items from the system with their details including metadata.
+            </p>
+
+            <div class="endpoint-info" style="background: #f8f9fa; padding: 10px; border-radius: 4px; margin-bottom: 20px;">
+              <span style="background: #2196F3; color: white; padding: 2px 8px; border-radius: 3px; font-size: 12px; margin-right: 10px;">GET</span>
+              <code style="color: #666;">https://api.onepay.lk/v3/item/</code>
+            </div>
+
+            <h4 style="margin-top: 30px;">RESPONSE PARAMETERS</h4>
+            <table class="central-overflow-x" style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr style="background: #f8f9fa;">
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Parameter</th>
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Type</th>
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">status</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Number</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Status code of the response (e.g., 200 for success)</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">message</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Response message indicating the result of the operation</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Array</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Array of item objects</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data[].item_id</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Unique identifier for the item</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data[].name</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Name of the item</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data[].description</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Description of the item</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data[].price</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Price of the item</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data[].currency</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Currency code for the price</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data[].image_url</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">URL of the item's image</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data[].is_deleted</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Boolean</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Indicates if the item has been deleted</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data[].metadata</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Array</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Array of metadata objects for the item</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data[].metadata[].key</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Key of the metadata property</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data[].metadata[].value</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Value of the metadata property</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data[].metadata[].is_deleted</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Boolean</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Indicates if the metadata property has been deleted</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Right side - API Testing -->
+          <div class="api-testing-section col-lg-5 col-md-5 col-12" style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
+            <div class="credentials-section" style="margin-bottom: 30px;">
+              <h3 style="margin-bottom: 15px; color: #333;">CREDENTIALS</h3>
+              <div style="background: white; padding: 15px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div>
+                  <label class="input-label" style="display: block; margin-bottom: 5px; color: #666;">Authorization</label>
+                  <input type="text" id="get-item-authorization" class="api-input form-control" placeholder="Authorization">
+                </div>
+              </div>
+            </div>
+
+            <div class="request-section" style="margin-bottom: 30px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="margin: 0; color: #333;">REQUEST</h3>
+                <button id="get-item-try-out-btn" style="padding: 8px 20px; background: #ff6b35; color: white; border: none; border-radius: 4px; cursor: pointer;">Try it!</button>
+              </div>
+            </div>
+
+            <div class="response-section">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="margin: 0; color: #333;">RESPONSE</h3>
+                <div style="display: flex; gap: 10px;">
+                  <span style="padding: 4px 12px; background: #4CAF50; color: white; border-radius: 12px; font-size: 12px;">200</span>
+                  <span style="padding: 4px 12px; background: #f44336; color: white; border-radius: 12px; font-size: 12px;">400</span>
+                  <span style="padding: 4px 12px; background: #ff9800; color: white; border-radius: 12px; font-size: 12px;">403</span>
+                </div>
+              </div>
+              <div style="background: #2d2d2d; padding: 15px; border-radius: 4px;">
+<pre><code class="json" id="get-item-response-code" style="color: #fff; background: transparent;">
+// Response will appear here after clicking Try it!
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Update Item Section -->
+        <div class="overflow-hidden row" id="update-item" style="margin-top: 50px;">
+          <!-- Left side - Documentation -->
+          <div class="documentation-section col-lg-7 col-md-7 col-12" style="padding-right: 30px;">
+            <h2>Update Item</h2>
+            <p style="color: #666; margin-bottom: 20px;">
+              Updates an existing item in the system with new details such as name, description, price, currency, image URL and metadata.
+            </p>
+
+            <div class="endpoint-info" style="background: #f8f9fa; padding: 10px; border-radius: 4px; margin-bottom: 20px;">
+              <span style="background: #FF9800; color: white; padding: 2px 8px; border-radius: 3px; font-size: 12px; margin-right: 10px;">PUT</span>
+              <code style="color: #666;">https://api.onepay.lk/v3/item/{item_id}/</code>
+            </div>
+
+            <h4 style="margin-top: 30px;">PATH PARAMETERS</h4>
+            <table class="central-overflow-x" style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr style="background: #f8f9fa;">
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Parameter</th>
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Type</th>
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">item_id</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">The unique identifier of the item to update</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h4 style="margin-top: 30px;">REQUEST PARAMETERS</h4>
+            <table class="central-overflow-x" style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr style="background: #f8f9fa;">
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Parameter</th>
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Type</th>
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">name</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Name of the item</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">description</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Description of the item</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">price</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Number</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Price of the item</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">currency</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Currency code for the price (e.g., USD, LKR)</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">image_url</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">URL of the item's image</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">metadata</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Object</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Additional metadata about the item (custom key-value pairs)</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h4 style="margin-top: 30px;">RESPONSE PARAMETERS</h4>
+            <table class="central-overflow-x" style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr style="background: #f8f9fa;">
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Parameter</th>
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Type</th>
+                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee;">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">status</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Number</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Status code of the response (e.g., 200 for success)</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">message</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Response message indicating the result of the operation</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Object</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Contains the response data</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">data.item_id</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">String</td>
+                  <td style="padding: 12px; border-bottom: 1px solid #eee;">Unique identifier of the updated item</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Right side - API Testing -->
+          <div class="api-testing-section col-lg-5 col-md-5 col-12" style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
+            <div class="credentials-section" style="margin-bottom: 30px;">
+              <h3 style="margin-bottom: 15px; color: #333;">CREDENTIALS</h3>
+              <div style="background: white; padding: 15px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div style="margin-bottom: 15px;">
+                  <label class="input-label" style="display: block; margin-bottom: 5px; color: #666;">Authorization</label>
+                  <input type="text" id="update-item-authorization" class="api-input form-control" placeholder="Authorization">
+                </div>
+                <div>
+                  <label class="input-label" style="display: block; margin-bottom: 5px; color: #666;">Item ID</label>
+                  <input type="text" id="update-item-id" class="api-input form-control" placeholder="Item ID">
+                </div>
+              </div>
+            </div>
+
+            <div class="request-section" style="margin-bottom: 30px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="margin: 0; color: #333;">REQUEST</h3>
+                <button id="update-item-try-out-btn" style="padding: 8px 20px; background: #ff6b35; color: white; border: none; border-radius: 4px; cursor: pointer;">Try it!</button>
+              </div>
+              <div style="background: #2d2d2d; padding: 15px; border-radius: 4px; margin-bottom: 20px;">
+<pre><code class="json" id="update-item-request-code" style="color: #fff; background: transparent;">
+{
+  "name": "Laptop",
+  "description": "Gaming Laptop",
+  "price": 1600,
+  "currency": "USD",
+  "image_url": "https://example.com/laptop.jpg",
+  "metadata": {
+    "brand": "hp",
+    "processor": "Intel i7",
+    "RAM": "16GB"
+  }
+}
+</code></pre>
+              </div>
+            </div>
+
+            <div class="response-section">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="margin: 0; color: #333;">RESPONSE</h3>
+                <div style="display: flex; gap: 10px;">
+                  <span style="padding: 4px 12px; background: #4CAF50; color: white; border-radius: 12px; font-size: 12px;">200</span>
+                  <span style="padding: 4px 12px; background: #f44336; color: white; border-radius: 12px; font-size: 12px;">400</span>
+                  <span style="padding: 4px 12px; background: #ff9800; color: white; border-radius: 12px; font-size: 12px;">403</span>
+                </div>
+              </div>
+              <div style="background: #2d2d2d; padding: 15px; border-radius: 4px;">
+<pre><code class="json" id="update-item-response-code" style="color: #fff; background: transparent;">
+{
+  "status": 200,
+  "message": "Successfully update item",
+  "data": {
+    "item_id": "item_57f132843c"
+  }
+}
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
+  </div>
 
-    <script src="js/script.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Nested menu functionality
-            const menuItems = document.querySelectorAll('.menu-item.has-submenu');
-            menuItems.forEach(item => {
-                const link = item.querySelector('a');
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    item.classList.toggle('expanded');
-                });
-            });
-
-            // Create Payment Request functionality
-            const tryOutBtn = document.getElementById('try-out-btn');
-            const requestCode = document.getElementById('request-code');
-            const responseCode = document.getElementById('response-code');
-
-            tryOutBtn.addEventListener('click', async function() {
-                // Implement the "Try it!" fetch request to your endpoint here
-                // and update responseCode.textContent with the returned data.
-            });
-
-            // Get Payment Request functionality
-            const getTryOutBtn = document.getElementById('get-try-out-btn');
-            const getResponseCode = document.getElementById('get-response-code');
-
-            getTryOutBtn.addEventListener('click', async function() {
-                const authorization = document.getElementById('get-authorization').value;
-                const paymentRequestId = document.getElementById('payment-request-id').value;
-
-                try {
-                    const response = await fetch(`https://api.onepay.lk/v1/paymentRequest/${paymentRequestId}`, {
-                        method: 'GET',
-                        headers: {
-                            'Authorization': authorization,
-                            'Content-Type': 'application/json'
-                        }
-                    });
-
-                    const responseData = await response.json();
-                    getResponseCode.textContent = JSON.stringify(responseData, null, 2);
-                    hljs.highlightBlock(getResponseCode);
-                } catch (error) {
-                    getResponseCode.textContent = JSON.stringify({
-                        error: 'API call failed',
-                        message: error.message
-                    }, null, 2);
-                    hljs.highlightBlock(getResponseCode);
-                }
-            });
+  <script src="js/script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Nested menu functionality
+      const menuItems = document.querySelectorAll('.menu-item.has-submenu');
+      menuItems.forEach(item => {
+        const link = item.querySelector('a');
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          item.classList.toggle('expanded');
         });
-    </script>
+      });
+
+      // Scroll to section functionality
+      const scrollLinks = document.querySelectorAll('.scroll-to-link');
+      const sections = {};
+      let currentActiveSection = null;
+
+      // Build sections object
+      scrollLinks.forEach(link => {
+        const targetId = link.getAttribute('data-target');
+        const section = document.getElementById(targetId);
+        if (section) {
+          sections[targetId] = {
+            id: targetId,
+            element: section,
+            link: link
+          };
+        }
+      });
+
+      // Add click event listeners for smooth scrolling
+      scrollLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = link.getAttribute('data-target');
+          const targetSection = document.getElementById(targetId);
+          if (targetSection) {
+            // Remove active class from all links
+            scrollLinks.forEach(l => l.classList.remove('active'));
+            // Add active class to clicked link
+            link.classList.add('active');
+            // Smooth scroll to section
+            targetSection.scrollIntoView({ 
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+
+      // Highlight menu item on scroll
+      function highlightMenuOnScroll() {
+        const scrollPosition = window.scrollY;
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+        const bottomThreshold = 20; // Even smaller threshold for more precise detection
+
+        // Check if we're at the bottom of the page
+        const isAtBottom = (scrollPosition + windowHeight) >= (documentHeight - bottomThreshold);
+
+        if (isAtBottom) {
+          // When at bottom, always highlight the last section (Update Item)
+          const lastSectionId = 'update-item';
+          const lastSection = sections[lastSectionId];
+
+          // Remove active class from all links
+          scrollLinks.forEach(link => link.classList.remove('active'));
+          
+          // Add active class to the last section's link
+          if (lastSection) {
+            lastSection.link.classList.add('active');
+            currentActiveSection = lastSectionId;
+
+            // Ensure parent menu item is expanded
+            const parentMenuItem = lastSection.link.closest('.menu-item.has-submenu');
+            if (parentMenuItem && !parentMenuItem.classList.contains('expanded')) {
+              parentMenuItem.classList.add('expanded');
+            }
+          }
+        } else {
+          // Normal scroll behavior
+          const scrollOffset = 150;
+          const viewportMiddle = scrollPosition + (windowHeight / 2);
+
+          let currentSection = null;
+          let smallestDistance = Infinity;
+
+          for (const sectionId in sections) {
+            const section = sections[sectionId];
+            const sectionTop = section.element.offsetTop;
+            const sectionHeight = section.element.offsetHeight;
+            const sectionMiddle = sectionTop + (sectionHeight / 2);
+            const distance = Math.abs(viewportMiddle - sectionMiddle);
+
+            if (distance < smallestDistance) {
+              smallestDistance = distance;
+              currentSection = section;
+            }
+          }
+
+          if (currentSection && currentSection.id !== currentActiveSection) {
+            scrollLinks.forEach(link => link.classList.remove('active'));
+            currentSection.link.classList.add('active');
+            currentActiveSection = currentSection.id;
+
+            const parentMenuItem = currentSection.link.closest('.menu-item.has-submenu');
+            if (parentMenuItem && !parentMenuItem.classList.contains('expanded')) {
+              parentMenuItem.classList.add('expanded');
+            }
+          }
+        }
+      }
+
+      // Add scroll event listener
+      window.addEventListener('scroll', highlightMenuOnScroll);
+      // Initial highlight check
+      highlightMenuOnScroll();
+
+      // Rest of your existing code...
+
+      // API Try Out Implementation
+      function makeApiRequest(method, url, headers, body = null) {
+        const options = {
+          method: method,
+          headers: {
+            'Content-Type': 'application/json',
+            ...headers
+          }
+        };
+
+        if (body) {
+          options.body = JSON.stringify(body);
+        }
+
+        return fetch(url, options)
+          .then(response => response.json())
+          .catch(error => {
+            return {
+              status: 500,
+              message: 'Error making request',
+              error: error.message
+            };
+          });
+      }
+
+      // Create Transaction
+      document.getElementById('try-out-btn').addEventListener('click', async () => {
+        const authorization = document.getElementById('authorization').value;
+        const appId = document.getElementById('api-key').value;
+        const hashSalt = document.getElementById('hash-salt').value;
+
+        const requestBody = {
+          currency: "LKR",      
+          app_id: appId,
+          hash: hashSalt,
+          amount: 100.00,
+          reference: "7Q1M1187AE",
+          customer_first_name: "John",
+          customer_last_name: "Doe",
+          customer_phone_number: "+94771234567",
+          customer_email: "john@example.com",
+          transaction_redirect_url: "https://www.example.com",
+          additionalData: "testing"
+        };
+
+        const response = await makeApiRequest(
+          'POST',
+          'https://api.onepay.lk/v3/checkout/link/',
+          { 'Authorization': authorization },
+          requestBody
+        );
+
+        document.getElementById('response-code').textContent = JSON.stringify(response, null, 2);
+        hljs.highlightBlock(document.getElementById('response-code'));
+      });
+
+      // Get Transaction
+      document.getElementById('get-try-out-btn').addEventListener('click', async () => {
+        const authorization = document.getElementById('get-authorization').value;
+        const appId = document.getElementById('get-app-id').value;
+        const transactionId = document.getElementById('transaction-id').value;
+
+        const requestBody = {
+          app_id: appId,
+          onepay_transaction_id: transactionId
+        };
+
+        const response = await makeApiRequest(
+          'POST',
+          'https://onepay-api-manager-uat-dot-spemai-asia.el.r.appspot.com/v3/transaction/status/',
+          { 'Authorization': authorization },
+          requestBody
+        );
+
+        document.getElementById('get-response-code').textContent = JSON.stringify(response, null, 2);
+        hljs.highlightBlock(document.getElementById('get-response-code'));
+      });
+
+      // Create Item
+      document.getElementById('create-item-try-out-btn').addEventListener('click', async () => {
+        const authorization = document.getElementById('create-item-authorization').value;
+
+        const requestBody = {
+          name: "Desktop",
+          description: "Work Laptop",
+          price: 1400.99,
+          currency: "USD",
+          image_url: "https://example.com/laptop.jpg",
+          metadata: {
+            brand: "Dell",
+            processor: "Intel i5",
+            RAM: "16GB"
+          }
+        };
+
+        const response = await makeApiRequest(
+          'POST',
+          'https://api.onepay.lk/v3/item/',
+          { 'Authorization': authorization },
+          requestBody
+        );
+
+        document.getElementById('create-item-response-code').textContent = JSON.stringify(response, null, 2);
+        hljs.highlightBlock(document.getElementById('create-item-response-code'));
+      });
+
+      // Get Item
+      document.getElementById('get-item-try-out-btn').addEventListener('click', async () => {
+        const authorization = document.getElementById('get-item-authorization').value;
+
+        const response = await makeApiRequest(
+          'GET',
+          'https://api.onepay.lk/v3/item/',
+          { 'Authorization': authorization }
+        );
+
+        document.getElementById('get-item-response-code').textContent = JSON.stringify(response, null, 2);
+        hljs.highlightBlock(document.getElementById('get-item-response-code'));
+      });
+
+      // Update Item
+      document.getElementById('update-item-try-out-btn').addEventListener('click', async () => {
+        const authorization = document.getElementById('update-item-authorization').value;
+        const itemId = document.getElementById('update-item-id').value;
+
+        const requestBody = {
+          name: "Laptop",
+          description: "Gaming Laptop",
+          price: 1600,
+          currency: "USD",
+          image_url: "https://example.com/laptop.jpg",
+          metadata: {
+            brand: "hp",
+            processor: "Intel i7",
+            RAM: "16GB"
+          }
+        };
+
+        const response = await makeApiRequest(
+          'PUT',
+          `https://api.onepay.lk/v3/item/${itemId}/`,
+          { 'Authorization': authorization },
+          requestBody
+        );
+
+        document.getElementById('update-item-response-code').textContent = JSON.stringify(response, null, 2);
+        hljs.highlightBlock(document.getElementById('update-item-response-code'));
+      });
+
+      // Add error handling for all response codes
+      function handleApiError(response) {
+        if (!response.ok) {
+          switch (response.status) {
+            case 400:
+              return { status: 400, message: 'Bad Request - Please check your input parameters' };
+            case 401:
+              return { status: 401, message: 'Unauthorized - Invalid credentials' };
+            case 403:
+              return { status: 403, message: 'Forbidden - You do not have permission to access this resource' };
+            case 404:
+              return { status: 404, message: 'Not Found - The requested resource does not exist' };
+            default:
+              return { status: response.status, message: 'An error occurred' };
+          }
+        }
+        return response.json();
+      }
+
+      // Initialize syntax highlighting
+      document.querySelectorAll('pre code').forEach((block) => {
+        hljs.highlightBlock(block);
+      });
+    });
+  </script>
 </body>
 </html>
