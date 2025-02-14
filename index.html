@@ -297,6 +297,9 @@
                             <li class="scroll-to-link" data-target="onepay-js">
                                 <a>OnepayJS</a>
                             </li>
+                            <li class="scroll-to-link" data-target="api-implementation">
+                                <a>API Implementation</a>
+                            </li>
                         </ul>
                     </li>
 
@@ -632,6 +635,51 @@ export default App;</code>
                             });
                         }
                     </script>
+                </div>
+
+                <!-- API Implementation Section -->
+                <div class="overflow-hidden" id="api-implementation">
+                    <h1>API Implementation</h1>
+                    <p>
+                        This guide walks you through the process of implementing our payment system using the REST APIs. 
+                        We'll cover the steps from creating items to processing payments.
+                    </p>
+
+                    <h2>Implementation Steps</h2>
+                    <ol class="custom-steps">
+                        <li>
+                            <strong>Create Items (Optional)</strong>
+                            <p>If you want to associate specific items with your payment request:</p>
+                            <ul>
+                                <li>Use the <a href="payment-api.html#create-item">Create Item API</a> to create items in the system</li>
+                                <li>Store the returned <code>item_id</code> for use in payment requests</li>
+                                <li>You can verify the item creation using the <a href="payment-api.html#get-item">Get Item API</a></li>
+                                <li>Items can be updated later using the <a href="payment-api.html#update-item">Update Item API</a> if needed</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Create Payment Request</strong>
+                            <p>To initiate a payment transaction:</p>
+                            <ul>
+                                <li>Use the <a href="payment-api.html#create-payment-request">Create Transaction API</a></li>
+                                <li>Include the <code>item_ids</code> in the request if you want to associate specific items</li>
+                                <li>The API will return a payment URL that you can use to redirect customers to the payment gateway</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Track Payment Status</strong>
+                            <p>To monitor the payment status:</p>
+                            <ul>
+                                <li>Use the <a href="payment-api.html#get-payment-request">Get Transaction API</a> to check the payment status</li>
+                                <li>Poll this endpoint periodically to track the payment completion</li>
+                            </ul>
+                        </li>
+                    </ol>
+
+                    <div class="alert alert-info mt-4">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Note:</strong> Make sure to handle all possible response codes and implement proper error handling as described in the <a href="#error-handling">Error Handling</a> section.
+                    </div>
                 </div>
 
                 <!-- Test Card Details Section -->
