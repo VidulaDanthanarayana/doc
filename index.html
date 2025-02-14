@@ -34,7 +34,7 @@
           counter-reset: step-counter;
         }
     
-        /* Each list item’s styling */
+        /* Each list item's styling */
         ol.custom-steps > li {
           position: relative;
           margin-bottom: 16px; /* Spacing between steps */
@@ -719,6 +719,7 @@ export default App;</code>
       document.addEventListener('DOMContentLoaded', function() {
         const menuLinks = document.querySelectorAll('.scroll-to-link');
         const sections = document.querySelectorAll('.overflow-hidden');
+        let currentActiveSection = null;
 
         // On-click smooth scrolling
         menuLinks.forEach(link => {
@@ -729,7 +730,7 @@ export default App;</code>
             
             if (targetEl) {
               window.scrollTo({
-                top: targetEl.offsetTop - 60, // offset for fixed header
+                top: targetEl.offsetTop - 60,
                 behavior: 'smooth'
               });
             }
@@ -737,44 +738,100 @@ export default App;</code>
         });
 
         // Highlight active menu item on scroll
-        window.addEventListener('scroll', () => {
-          let fromTop = window.scrollY + 70; // offset for top menu
-          
-          sections.forEach(section => {
-            if (
-              section.offsetTop <= fromTop &&
-              (section.offsetTop + section.offsetHeight) > fromTop
-            ) {
-              let sectionId = section.getAttribute('id');
-              
+        function highlightMenuOnScroll() {
+          const scrollPosition = window.scrollY;
+          const windowHeight = window.innerHeight;
+          const documentHeight = document.documentElement.scrollHeight;
+          const bottomThreshold = 20; // Small threshold for precise detection
+
+          // Check if we're at the bottom of the page
+          const isAtBottom = (scrollPosition + windowHeight) >= (documentHeight - bottomThreshold);
+
+          if (isAtBottom) {
+            // When at bottom, highlight the last section
+            const lastSection = sections[sections.length - 1];
+            const lastSectionId = lastSection.getAttribute('id');
+
+            // Remove active class from all links
+            menuLinks.forEach(link => link.classList.remove('active'));
+            
+            // Add active class to the last section's link
+            menuLinks.forEach(link => {
+              if (link.getAttribute('data-target') === lastSectionId) {
+                link.classList.add('active');
+                currentActiveSection = lastSectionId;
+
+                // Ensure parent menu item is expanded if it exists
+                const parentMenuItem = link.closest('.menu-item');
+                if (parentMenuItem) {
+                  const submenu = parentMenuItem.querySelector('.submenu');
+                  if (submenu) {
+                    parentMenuItem.classList.add('expanded');
+                  }
+                }
+              }
+            });
+          } else {
+            // Normal scroll behavior
+            const viewportMiddle = scrollPosition + (windowHeight / 2);
+            let currentSection = null;
+            let smallestDistance = Infinity;
+
+            sections.forEach(section => {
+              const sectionTop = section.offsetTop;
+              const sectionHeight = section.offsetHeight;
+              const sectionMiddle = sectionTop + (sectionHeight / 2);
+              const distance = Math.abs(viewportMiddle - sectionMiddle);
+
+              if (distance < smallestDistance) {
+                smallestDistance = distance;
+                currentSection = section;
+              }
+            });
+
+            if (currentSection && currentSection.id !== currentActiveSection) {
+              const sectionId = currentSection.getAttribute('id');
               menuLinks.forEach(link => {
                 link.classList.remove('active');
                 if (link.getAttribute('data-target') === sectionId) {
                   link.classList.add('active');
+                  currentActiveSection = sectionId;
+
+                  // Ensure parent menu item is expanded if it exists
+                  const parentMenuItem = link.closest('.menu-item');
+                  if (parentMenuItem) {
+                    const submenu = parentMenuItem.querySelector('.submenu');
+                    if (submenu) {
+                      parentMenuItem.classList.add('expanded');
+                    }
+                  }
                 }
               });
             }
-          });
-        });
+          }
+        }
+
+        // Add scroll event listener
+        window.addEventListener('scroll', highlightMenuOnScroll);
+        // Initial highlight check
+        highlightMenuOnScroll();
       });
 
+      // FAB Toggle functionality
+      document.getElementById('fab-toggle').addEventListener('click', function() {
+        document.querySelector('.fab-menu').classList.toggle('active');
+      });
 
-      
-    // FAB Toggle functionality
-    document.getElementById('fab-toggle').addEventListener('click', function() {
-      document.querySelector('.fab-menu').classList.toggle('active');
-    });
-
-    // Close FAB menu when clicking outside
-    document.addEventListener('click', function(event) {
-      const fabContainer = document.querySelector('.fab-container');
-      const fabButton = document.getElementById('fab-toggle');
-      const fabMenu = document.querySelector('.fab-menu');
-      
-      if (!fabContainer.contains(event.target)) {
-        fabMenu.classList.remove('active');
-      }
-    });
+      // Close FAB menu when clicking outside
+      document.addEventListener('click', function(event) {
+        const fabContainer = document.querySelector('.fab-container');
+        const fabButton = document.getElementById('fab-toggle');
+        const fabMenu = document.querySelector('.fab-menu');
+        
+        if (!fabContainer.contains(event.target)) {
+          fabMenu.classList.remove('active');
+        }
+      });
     </script>
 </body>
 </html>
