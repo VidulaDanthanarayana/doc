@@ -674,6 +674,27 @@ export default App;</code>
                                 <li>Poll this endpoint periodically to track the payment completion</li>
                             </ul>
                         </li>
+                        <li>
+                            <strong>Callback Response</strong>
+                            <p>Set up your system to receive transaction status updates:</p>
+                            <ul>
+                                <li>Update your callback URL in the APP section of the Onepay portal</li>
+                                <li>Your endpoint should be configured to accept POST requests with JSON payloads</li>
+                                <li>After transaction completion, Onepay will send a callback with transaction details</li>
+                            </ul>
+                            <div class="mt-3">
+                                <p>Sample callback payload:</p>
+                                <pre><code class="language-json p-2">{
+    "transaction_id": "WQBV118E584C83CBA50C6",
+    "status": 1,
+    "status_message": "SUCCESS",
+    "additional_data": ""
+}</code></pre>
+                            </div>
+                            <p class="mt-3">
+                                Use this callback data for logging, verification, and updating transaction status in your system.
+                            </p>
+                        </li>
                     </ol>
 
                     <div class="alert alert-info mt-4">
